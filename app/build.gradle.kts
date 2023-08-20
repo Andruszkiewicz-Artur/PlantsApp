@@ -2,16 +2,18 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    alias(libs.plugins.hilt.android.plugin)
 }
 
 android {
     namespace = "com.example.plantsapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.plantsapp"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -42,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.8"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -56,11 +58,29 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
-    implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.androidx.test.ext.junit)
+    implementation(libs.espresso.core)
+    implementation(libs.ui.test.junit4)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.bundles.testImplementation)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
+    implementation(libs.coil)
+    implementation(libs.material.icons)
+    implementation(libs.lifecycle)
+
+    implementation(libs.bundles.navigation)
+    implementation(libs.bundles.coroutines)
+
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
+
+    implementation(libs.bundles.dagger.hilt)
+    kapt(libs.bundles.dagger.hilt.compiler)
 }
