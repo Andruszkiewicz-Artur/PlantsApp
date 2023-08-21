@@ -16,6 +16,8 @@ material-icons = "1.6.0-alpha03"
 room-database = "2.6.0-alpha02"
 corountines = "1.6.4"
 lifecycle = "2.7.0-alpha01"
+sheets-compose-dialogs = "1.2.0"
+cameraX = "1.2.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.12.0-rc01" }
@@ -46,6 +48,11 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "corountines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "corountines" }
 lifecycle = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+core = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "core", version.ref = "sheets-compose-dialogs" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -60,3 +67,5 @@ navigation = ["navigation-fragment-ktx", "navigation-ui-ktx"]
 dagger-hilt = ["hilt-navigation-compose", "hilt-android"]
 dagger-hilt-compiler = ["hilt-android-compiler", "hilt-compiler"]
 coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
+sheets-compose-dialogs = ["core"]
+cameraX = ["camera-camera2", "camera-lifecycle", "camera-view"]

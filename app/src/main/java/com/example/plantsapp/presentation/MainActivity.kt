@@ -18,9 +18,9 @@ class MainActivity : ComponentActivity() {
             PlantsAppTheme {
                 RootNavHost()
             }
-
-            requestPermissions(Manifest.permission.CAMERA)
         }
+
+        requestPermissions(Manifest.permission.CAMERA)
     }
 
     private fun requestPermissions(vararg permissions: String) {

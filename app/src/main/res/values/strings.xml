@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">PlantsApp</string>
+    <string name="PlantsAlarms">Plants Alarms</string>
+    <string name="NoneAlarmsYet">None alarms yet!</string>
+    <string name="SetUpNewAlarm">Set up new alarm!</string>
+    <string name="MakeNewAlarm">Make new alarm</string>
+    <string name="PlantName">Plant name</string>
+    <string name="PlantDescription">Plant description</string>
+    <string name="Day">Day</string>
+    <string name="Every">Every</string>
+    <string name="HowDoYouWantPickImage">How do you want to add a photo?</string>
+    <string name="Gallery">Photo Library</string>
+    <string name="PickPhoto">Pick Photo</string>
+    <string name="Cancel">Cancel</string>
 </resources>
