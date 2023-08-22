@@ -10,6 +10,12 @@ sealed class PlantsScreen(
 
     object AddEdit: PlantsScreen(
         route = "add_edit_screen"
-    )
+    ) {
+        fun sendPlantAlarmId(
+            plantAlarmId: Int
+        ): String {
+            return this.route + "?plantAlarmId=$plantAlarmId"
+        }
+    }
 
 }

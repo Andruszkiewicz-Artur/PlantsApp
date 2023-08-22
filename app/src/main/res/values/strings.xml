@@ -12,4 +12,8 @@
     <string name="Gallery">Photo Library</string>
     <string name="PickPhoto">Pick Photo</string>
     <string name="Cancel">Cancel</string>
+    <string name="AddPlantName">Add plant name!</string>
+    <string name="EveryDayIsWrong">Every day can`t be less then 1!</string>
+    <string name="AddNewAlarm">Add new alarm!</string>
+    <string name="SaveAlarm">Save alarm!</string>
 </resources>

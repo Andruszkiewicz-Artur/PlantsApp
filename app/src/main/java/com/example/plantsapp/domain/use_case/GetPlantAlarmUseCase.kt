@@ -9,8 +9,8 @@ class GetPlantAlarmUseCase @Inject constructor(
     private val repository: PlantAlarmRepository
 ) {
 
-    suspend fun invoke(id: Int): PlantAlarmModel {
-        return repository.getPlantAlarm(id).toPlantAlarmModel()
+    suspend fun invoke(id: Int): PlantAlarmModel? {
+        return repository.getPlantAlarm(id)?.toPlantAlarmModel()
     }
 
 }

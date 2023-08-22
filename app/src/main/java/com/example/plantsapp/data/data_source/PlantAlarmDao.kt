@@ -14,7 +14,7 @@ interface PlantAlarmDao {
     fun getAllPlantsAlarm(): Flow<List<PlantAlarmDto>>
 
     @Query("SELECT * FROM plants_alarm WHERE id = :id")
-    suspend fun getPlantAlarm(id: Int): PlantAlarmDto
+    suspend fun getPlantAlarm(id: Int): PlantAlarmDto?
 
     @Upsert
     suspend fun upsertPlantAlarm(plantAlarm: PlantAlarmDto)

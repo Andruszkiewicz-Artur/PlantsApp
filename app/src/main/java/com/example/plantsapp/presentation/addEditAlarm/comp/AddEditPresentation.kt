@@ -266,7 +266,7 @@ fun AddEditPresentation(
                     Spacer(modifier = Modifier.heightIn(32.dp))
 
                     TextField(
-                        value = "${state.alarmModel.alarmTime}",
+                        value = "${state.alarmModel.repeating}",
                         onValueChange = {
                             val figure: Int? = it.toIntOrNull()
                             if (figure != null) viewModel.onEvent(AddEditEvent.ChooseAlarmTime(figure))

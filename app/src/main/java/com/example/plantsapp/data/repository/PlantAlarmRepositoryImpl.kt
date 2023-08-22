@@ -13,7 +13,7 @@ class PlantAlarmRepositoryImpl(
         return dao.getAllPlantsAlarm()
     }
 
-    override suspend fun getPlantAlarm(id: Int): PlantAlarmDto {
+    override suspend fun getPlantAlarm(id: Int): PlantAlarmDto? {
         return dao.getPlantAlarm(id)
     }
 

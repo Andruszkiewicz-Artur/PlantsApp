@@ -18,7 +18,7 @@ data class PlantAlarmDto(
     val plantDescription: String,
 
     @ColumnInfo(name = "photo")
-    val photo: Uri?,
+    val photo: String?,
 
     @ColumnInfo(name = "isActive")
     val isActive: Boolean,
@@ -27,8 +27,8 @@ data class PlantAlarmDto(
     val repeating: Int,
 
     @ColumnInfo(name = "basicDate")
-    val basicDate: LocalDateTime,
+    val basicDate: String,
 
     @ColumnInfo(name = "nextDate")
-    val nextDate: LocalDateTime
+    val nextDate: String
 )
