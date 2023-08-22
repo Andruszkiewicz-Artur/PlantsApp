@@ -11,5 +11,6 @@ sealed class AddEditEvent {
     data class ChooseAlarmTime(val days: Int): AddEditEvent()
 
     object Save: AddEditEvent()
-
+    object ShowCamera: AddEditEvent()
+    object HideCamera: AddEditEvent()
 }

@@ -1,6 +1,8 @@
 package com.example.plantsapp.presentation.addEditAlarm.comp
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -37,9 +39,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +73,11 @@ import com.maxkeppeker.sheets.core.models.base.IconSource
 import com.maxkeppeker.sheets.core.models.base.SelectionButton
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import kotlinx.coroutines.flow.collectLatest
+import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddEditPresentation(
@@ -80,6 +88,14 @@ fun AddEditPresentation(
     val state = viewModel.state.collectAsState().value
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val typeChoosePictureState = rememberUseCaseState()
+
+    val singlePhotoPicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = {
+            if (it != null) viewModel.onEvent(AddEditEvent.ChoosePhoto(it))
+        }
+    )
 
     LaunchedEffect(key1 = true) {
         viewModel.sharedFlow.collectLatest { event ->
@@ -94,27 +110,58 @@ fun AddEditPresentation(
             }
         }
     }
-    
-    
+
+    CoreDialog(
+        state = typeChoosePictureState,
+        selection = CoreSelection(
+            positiveButton = SelectionButton(
+                text = stringResource(id = R.string.Gallery),
+                icon = IconSource(
+                    imageVector = Icons.Filled.PhotoLibrary
+                )
+            ),
+            onPositiveClick = {
+                singlePhotoPicker.launch(
+                    PickVisualMediaRequest(
+                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                    )
+                )
+            },
+            negativeButton = SelectionButton(
+                text = stringResource(id = R.string.PickPhoto),
+                icon = IconSource(
+                    imageVector = Icons.Filled.PhotoCamera
+                )
+            ),
+            onNegativeClick = {
+                viewModel.onEvent(AddEditEvent.ShowCamera)
+            }
+        ),
+        body = {
+            Text(text = context.getString(R.string.HowDoYouWantPickImage))
+        }
+    )
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.onEvent(AddEditEvent.Save)
-                },
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                shape = CircleShape,
-                elevation = FloatingActionButtonDefaults.elevation(10.dp, 10.dp),
-                modifier = Modifier
-                    .size(60.dp)
-            ) {
-                Image(
-                    imageVector = Icons.Filled.Save,
-                    contentDescription = "Add/Edit plant alarm",
+            if (state.showCamera.not()) {
+                FloatingActionButton(
+                    onClick = {
+                        viewModel.onEvent(AddEditEvent.Save)
+                    },
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    shape = CircleShape,
+                    elevation = FloatingActionButtonDefaults.elevation(10.dp, 10.dp),
                     modifier = Modifier
-                        .size(40.dp)
-                )
+                        .size(60.dp)
+                ) {
+                    Image(
+                        imageVector = Icons.Filled.Save,
+                        contentDescription = "Add/Edit plant alarm",
+                        modifier = Modifier
+                            .size(40.dp)
+                    )
+                }
             }
         }
     ) {
@@ -142,18 +189,36 @@ fun AddEditPresentation(
                         )
                     }
 
-                    PhotoPresenter(
-                        photo = state.photo,
-                        context = context,
-                        imagePicker = {
-                            viewModel.onEvent(AddEditEvent.ChoosePhoto(it))
+                    AnimatedContent(targetState = state.alarmModel.photo != null) {isPhoto ->
+                        if (isPhoto) {
+                            AsyncImage(
+                                model = state.alarmModel.photo,
+                                contentDescription = null,
+                                imageLoader = ImageLoader(context),
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(32.dp))
+                                    .heightIn(max = 300.dp)
+                                    .clickable {
+                                        typeChoosePictureState.show()
+                                    }
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Outlined.Yard,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(200.dp)
+                                    .clickable {
+                                        typeChoosePictureState.show()
+                                    }
+                            )
                         }
-                    )
+                    }
 
                     Spacer(modifier = Modifier.heightIn(16.dp))
 
                     TextField(
-                        value = state.plantName,
+                        value = state.alarmModel.plantName,
                         onValueChange = {
                             viewModel.onEvent(AddEditEvent.EnteredPlantName(it))
                         },
@@ -176,7 +241,7 @@ fun AddEditPresentation(
                     Spacer(modifier = Modifier.heightIn(16.dp))
 
                     TextField(
-                        value = state.plantDescription,
+                        value = state.alarmModel.plantDescription,
                         onValueChange = {
                             viewModel.onEvent(AddEditEvent.EnteredPlantDescription(it))
                         },
@@ -201,7 +266,7 @@ fun AddEditPresentation(
                     Spacer(modifier = Modifier.heightIn(32.dp))
 
                     TextField(
-                        value = "${state.alarmTime}",
+                        value = "${state.alarmModel.alarmTime}",
                         onValueChange = {
                             val figure: Int? = it.toIntOrNull()
                             if (figure != null) viewModel.onEvent(AddEditEvent.ChooseAlarmTime(figure))
@@ -228,6 +293,20 @@ fun AddEditPresentation(
                             .focusRequester(focusRequester)
                     )
                 }
+            }
+
+            if(state.showCamera) {
+                CameraView(
+                    outputDirectory = state.outputDirectory,
+                    executor = state.cameraExecutor,
+                    onImageCapture = {
+                        viewModel.onEvent(AddEditEvent.ChoosePhoto(it))
+                        viewModel.onEvent(AddEditEvent.HideCamera)
+                    },
+                    onError = {
+                        Log.e("Check", "View error:", it)
+                    }
+                )
             }
         }
     }
