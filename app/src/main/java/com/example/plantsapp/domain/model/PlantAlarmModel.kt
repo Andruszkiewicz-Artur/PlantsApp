@@ -11,5 +11,5 @@ data class PlantAlarmModel(
     val isActive: Boolean = false,
     val repeating: Int = 1,
     val basicDate: LocalDateTime = LocalDateTime.now(),
-    val nextDate: LocalDateTime = LocalDateTime.now().plusDays(1)
+    val nextDate: LocalDateTime = LocalDateTime.now()
 )

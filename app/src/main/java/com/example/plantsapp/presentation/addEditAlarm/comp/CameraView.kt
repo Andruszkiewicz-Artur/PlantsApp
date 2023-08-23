@@ -11,12 +11,15 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lens
+import androidx.compose.material.icons.filled.ReplyAll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import kotlin.coroutines.suspendCoroutine
 fun CameraView(
     outputDirectory: File,
     executor: Executor,
+    onClickHide: () -> Unit,
     onImageCapture: (Uri) -> Unit,
     onError: (ImageCaptureException) -> Unit
 ) {
@@ -81,6 +85,26 @@ fun CameraView(
                 .fillMaxSize()
         )
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            IconButton(
+                onClick = { onClickHide() },
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(start = 16.dp, bottom = 36.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ReplyAll,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(60.dp)
+                )
+            }
+        }
+
         IconButton(
             onClick = {
                 Log.i("Check", "On Click")
@@ -94,7 +118,7 @@ fun CameraView(
                 )
             },
             modifier = Modifier
-                .padding(bottom = 20.dp)
+                .padding(bottom = 16.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Lens,

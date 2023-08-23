@@ -1,6 +1,7 @@
 package com.example.plantsapp.presentation
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -21,6 +22,9 @@ class MainActivity : ComponentActivity() {
         }
 
         requestPermissions(Manifest.permission.CAMERA)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(Manifest.permission.READ_MEDIA_IMAGES)
+        }
     }
 
     private fun requestPermissions(vararg permissions: String) {

@@ -16,4 +16,8 @@
     <string name="EveryDayIsWrong">Every day can`t be less then 1!</string>
     <string name="AddNewAlarm">Add new alarm!</string>
     <string name="SaveAlarm">Save alarm!</string>
+    <string name="Repeating">Repeating</string>
+    <string name="Days">Days</string>
+    <string name="NextWatering">Next watering</string>
+    <string name="LastWatering">Last watering</string>
 </resources>

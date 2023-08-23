@@ -10,7 +10,7 @@ class UpsertPlantAlarmUseCase @Inject constructor(
 ) {
 
     suspend fun invoke(plantAlarmModel: PlantAlarmModel) {
-        return repository.deletePlantAlarm(plantAlarmModel.toPlantAlarmDto())
+        return repository.upsertPlantAlarm(plantAlarmModel.toPlantAlarmDto())
     }
 
 }

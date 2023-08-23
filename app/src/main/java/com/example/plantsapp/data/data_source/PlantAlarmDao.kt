@@ -2,6 +2,8 @@ package com.example.plantsapp.data.data_source
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.plantsapp.domain.model.PlantAlarmDto
@@ -16,7 +18,7 @@ interface PlantAlarmDao {
     @Query("SELECT * FROM plants_alarm WHERE id = :id")
     suspend fun getPlantAlarm(id: Int): PlantAlarmDto?
 
-    @Upsert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertPlantAlarm(plantAlarm: PlantAlarmDto)
 
     @Delete

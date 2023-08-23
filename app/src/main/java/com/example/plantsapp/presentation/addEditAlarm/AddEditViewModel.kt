@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
+import java.time.LocalDateTime
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -85,7 +86,14 @@ class AddEditViewModel @Inject constructor(
             AddEditEvent.Save -> {
                 viewModelScope.launch {
                     if (noneError()) {
-                        plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(_state.value.alarmModel)
+                        val nextDate = LocalDateTime.now().plusDays(_state.value.alarmModel.repeating.toLong())
+                        val currentDate = LocalDateTime.now()
+
+                        plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(_state.value.alarmModel.copy(
+                            basicDate = currentDate,
+                            nextDate = nextDate
+                        ))
+
                         if (_state.value.alarmModel.id == null) _sharedFlow.emit(AddEditUiEvent.Toast(R.string.AddNewAlarm))
                         else _sharedFlow.emit(AddEditUiEvent.Toast(R.string.SaveAlarm))
 

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -31,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.plantsapp.R
 import com.example.plantsapp.core.unit.navigation.plants.PlantsScreen
+import com.example.plantsapp.presentation.home.HomeEvent
 import com.example.plantsapp.presentation.home.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -69,6 +71,7 @@ fun HomePresentation(
                 .fillMaxSize()
         ) {
             LazyColumn(
+                verticalArrangement = Arrangement.Top,
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
             ) {
@@ -95,6 +98,21 @@ fun HomePresentation(
                     }
                 }
 
+                items(state.plantsAlarm) {alarm ->
+                    AlarmPresentation(
+                        alarmModel = alarm,
+                        onClickAlarm = {
+                            if (alarm.id != null) navHostController.navigate(PlantsScreen.AddEdit.sendPlantAlarmId(alarm.id))
+                        },
+                        onClickSwitch = {
+                            viewModel.onEvent(HomeEvent.ChangeActiveAlarm(alarm))
+                        },
+                        onClickDelete = {
+                            viewModel.onEvent(HomeEvent.DeleteAlarm(alarm))
+                        },
+                        isDivider = state.plantsAlarm.last() != alarm
+                    )
+                }
             }
         }
     }

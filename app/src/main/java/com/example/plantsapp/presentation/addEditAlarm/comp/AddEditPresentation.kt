@@ -88,14 +88,6 @@ fun AddEditPresentation(
     val state = viewModel.state.collectAsState().value
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val typeChoosePictureState = rememberUseCaseState()
-
-    val singlePhotoPicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = {
-            if (it != null) viewModel.onEvent(AddEditEvent.ChoosePhoto(it))
-        }
-    )
 
     LaunchedEffect(key1 = true) {
         viewModel.sharedFlow.collectLatest { event ->
@@ -110,37 +102,6 @@ fun AddEditPresentation(
             }
         }
     }
-
-    CoreDialog(
-        state = typeChoosePictureState,
-        selection = CoreSelection(
-            positiveButton = SelectionButton(
-                text = stringResource(id = R.string.Gallery),
-                icon = IconSource(
-                    imageVector = Icons.Filled.PhotoLibrary
-                )
-            ),
-            onPositiveClick = {
-                singlePhotoPicker.launch(
-                    PickVisualMediaRequest(
-                        ActivityResultContracts.PickVisualMedia.ImageOnly
-                    )
-                )
-            },
-            negativeButton = SelectionButton(
-                text = stringResource(id = R.string.PickPhoto),
-                icon = IconSource(
-                    imageVector = Icons.Filled.PhotoCamera
-                )
-            ),
-            onNegativeClick = {
-                viewModel.onEvent(AddEditEvent.ShowCamera)
-            }
-        ),
-        body = {
-            Text(text = context.getString(R.string.HowDoYouWantPickImage))
-        }
-    )
 
     Scaffold(
         floatingActionButton = {
@@ -199,7 +160,7 @@ fun AddEditPresentation(
                                     .clip(RoundedCornerShape(32.dp))
                                     .heightIn(max = 300.dp)
                                     .clickable {
-                                        typeChoosePictureState.show()
+                                        viewModel.onEvent(AddEditEvent.ShowCamera)
                                     }
                             )
                         } else {
@@ -209,7 +170,7 @@ fun AddEditPresentation(
                                 modifier = Modifier
                                     .size(200.dp)
                                     .clickable {
-                                        typeChoosePictureState.show()
+                                        viewModel.onEvent(AddEditEvent.ShowCamera)
                                     }
                             )
                         }
@@ -305,6 +266,9 @@ fun AddEditPresentation(
                     },
                     onError = {
                         Log.e("Check", "View error:", it)
+                    },
+                    onClickHide = {
+                        viewModel.onEvent(AddEditEvent.HideCamera)
                     }
                 )
             }
