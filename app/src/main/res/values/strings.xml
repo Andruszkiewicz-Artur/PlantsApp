@@ -20,4 +20,6 @@
     <string name="Days">Days</string>
     <string name="NextWatering">Next watering</string>
     <string name="LastWatering">Last watering</string>
+    <string name="Retry">Retry</string>
+    <string name="RecoverAlarm">You want to recover the alarm?</string>
 </resources>

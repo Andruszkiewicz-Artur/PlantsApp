@@ -6,5 +6,6 @@ sealed class HomeEvent {
 
     data class ChangeActiveAlarm(val alarm: PlantAlarmModel): HomeEvent()
     data class DeleteAlarm(val alarm: PlantAlarmModel): HomeEvent()
+    data class AddAlarm(val alarm: PlantAlarmModel): HomeEvent()
 
 }

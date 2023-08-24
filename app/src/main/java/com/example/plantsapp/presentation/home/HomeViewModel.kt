@@ -60,6 +60,14 @@ class HomeViewModel @Inject constructor(
                     ) }
                 }
             }
+            is HomeEvent.AddAlarm -> {
+                viewModelScope.launch {
+                    plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(event.alarm)
+                    _state.update { it.copy(
+                        plantsAlarm = it.plantsAlarm.plus(event.alarm)
+                    ) }
+                }
+            }
         }
     }
 }

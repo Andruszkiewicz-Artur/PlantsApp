@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.concurrent.Executors
 import javax.inject.Inject
@@ -45,7 +46,8 @@ class AddEditViewModel @Inject constructor(
                 viewModelScope.launch {
                     plantAlarmUseCases.getPlantAlarmUseCase.invoke(plantAlarmId)?.also { plantAlarm ->
                         _state.update { it.copy(
-                            alarmModel = plantAlarm
+                            alarmModel = plantAlarm,
+                            basicAlarm = plantAlarm
                         ) }
                     }
                 }
@@ -85,12 +87,26 @@ class AddEditViewModel @Inject constructor(
             }
             AddEditEvent.Save -> {
                 viewModelScope.launch {
+
                     if (noneError()) {
-                        val nextDate = LocalDateTime.now().plusDays(_state.value.alarmModel.repeating.toLong())
-                        val currentDate = LocalDateTime.now()
+                        var currentSaveDate = LocalDateTime.now()
+                        val nextDate = if (_state.value.alarmModel.id != null) {
+                            val dateBefore = state.value.alarmModel.basicDate
+                            val date = dateBefore.plusDays(_state.value.alarmModel.repeating.toLong())
+                            val currentDate = LocalDateTime.now()
+                            val currentEndDate = LocalDateTime.of(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, 23, 59, 59)
+                            if(date < currentEndDate) {
+                                currentSaveDate = currentEndDate
+                                currentEndDate.plusDays(_state.value.alarmModel.repeating.toLong())
+                            } else {
+                                dateBefore.plusDays(_state.value.alarmModel.repeating.toLong())
+                            }
+                        } else {
+                            LocalDateTime.now().plusDays(_state.value.alarmModel.repeating.toLong())
+                        }
 
                         plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(_state.value.alarmModel.copy(
-                            basicDate = currentDate,
+                            basicDate = currentSaveDate,
                             nextDate = nextDate
                         ))
 

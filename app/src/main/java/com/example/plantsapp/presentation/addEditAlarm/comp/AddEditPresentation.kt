@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -24,19 +26,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.Yard
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -57,6 +65,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -105,31 +114,44 @@ fun AddEditPresentation(
 
     Scaffold(
         floatingActionButton = {
-            if (state.showCamera.not()) {
+            AnimatedVisibility(visible = !state.showCamera && state.alarmModel != state.basicAlarm) {
                 FloatingActionButton(
                     onClick = {
                         viewModel.onEvent(AddEditEvent.Save)
-                    },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    shape = CircleShape,
-                    elevation = FloatingActionButtonDefaults.elevation(10.dp, 10.dp),
-                    modifier = Modifier
-                        .size(60.dp)
+                    }
                 ) {
                     Image(
                         imageVector = Icons.Filled.Save,
                         contentDescription = "Add/Edit plant alarm",
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(30.dp)
                     )
                 }
             }
+        },
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.MakeNewAlarm)
+                    )
+                },
+                navigationIcon = {
+                    IconButton( onClick = { navHostController.popBackStack() } ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
+                }
+            )
         }
-    ) {
+    ) { value ->
         Box(
             contentAlignment = Alignment.TopCenter,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(value)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -138,19 +160,10 @@ fun AddEditPresentation(
             ) {
 
                 item {
-
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.MakeNewAlarm),
-                            style = MaterialTheme.typography.displayMedium
-                        )
-                    }
-
-                    AnimatedContent(targetState = state.alarmModel.photo != null) {isPhoto ->
+                    AnimatedContent(
+                        targetState = state.alarmModel.photo != null,
+                        label = stringResource(id = R.string.PickPhoto)
+                    ) { isPhoto ->
                         if (isPhoto) {
                             AsyncImage(
                                 model = state.alarmModel.photo,
@@ -161,6 +174,7 @@ fun AddEditPresentation(
                                     .heightIn(max = 300.dp)
                                     .clickable {
                                         viewModel.onEvent(AddEditEvent.ShowCamera)
+                                        focusRequester.freeFocus()
                                     }
                             )
                         } else {
@@ -171,6 +185,7 @@ fun AddEditPresentation(
                                     .size(200.dp)
                                     .clickable {
                                         viewModel.onEvent(AddEditEvent.ShowCamera)
+                                        focusRequester.freeFocus()
                                     }
                             )
                         }
@@ -178,7 +193,7 @@ fun AddEditPresentation(
 
                     Spacer(modifier = Modifier.heightIn(16.dp))
 
-                    TextField(
+                    OutlinedTextField(
                         value = state.alarmModel.plantName,
                         onValueChange = {
                             viewModel.onEvent(AddEditEvent.EnteredPlantName(it))
@@ -201,12 +216,12 @@ fun AddEditPresentation(
 
                     Spacer(modifier = Modifier.heightIn(16.dp))
 
-                    TextField(
+                    OutlinedTextField(
                         value = state.alarmModel.plantDescription,
                         onValueChange = {
                             viewModel.onEvent(AddEditEvent.EnteredPlantDescription(it))
                         },
-                        placeholder = {
+                        label = {
                             Text(
                                 text = stringResource(id = R.string.PlantDescription)
                             )
@@ -226,7 +241,7 @@ fun AddEditPresentation(
 
                     Spacer(modifier = Modifier.heightIn(32.dp))
 
-                    TextField(
+                    OutlinedTextField(
                         value = "${state.alarmModel.repeating}",
                         onValueChange = {
                             val figure: Int? = it.toIntOrNull()
