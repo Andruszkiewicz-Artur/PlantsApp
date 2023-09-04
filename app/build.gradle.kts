@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.sheets.compose.dialogs)
     implementation(libs.bundles.cameraX)
+    implementation(libs.bundles.work)
 
     implementation(libs.bundles.room)
     kapt(libs.room.compiler)
