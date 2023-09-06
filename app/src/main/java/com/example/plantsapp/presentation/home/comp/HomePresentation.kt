@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,11 +20,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.FactCheck
+import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -36,9 +46,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.plantsapp.R
@@ -81,6 +95,18 @@ fun HomePresentation(
                     Text(
                         text = stringResource(id = R.string.PlantsAlarms)
                     )
+                },
+                actions = {
+                    IconButton(onClick = {
+                        viewModel.onEvent(HomeEvent.ShowDialog)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.FactCheck,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(40.dp)
+                        )
+                    }
                 }
             )
         },
@@ -154,6 +180,107 @@ fun HomePresentation(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+        }
+    }
+
+    if (state.isDialog) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
+                )
+        ) {
+            Dialog(
+                onDismissRequest = {
+                    viewModel.onEvent(HomeEvent.HideDialog)
+                }
+            ) {
+                ElevatedCard {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    IconButton(onClick = { viewModel.onEvent(HomeEvent.HideDialog) }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Close,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(40.dp)
+                                        )
+                                    }
+                                }
+                                Text(
+                                    text = stringResource(id = R.string.PlantsList),
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 16.dp)
+                                )
+                            }
+
+                            Text(
+                                text = stringResource(id = R.string.PlantsWatered),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+
+                        }
+
+                        items(state.plantsForToday) {
+                            plantCheckBox(
+                                plantName = it.plantName,
+                                checked = it.isWatering,
+                                onCheckedChange = { checked ->
+                                    viewModel.onEvent(HomeEvent.ClickCheckBox(checked, it))
+                                }
+                            )
+                        }
+
+                        item {
+                            if (state.plantsForToday.isEmpty()) {
+                                Text(
+                                    text = stringResource(id = R.string.NonePlantsForToday),
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.onBackground.copy(
+                                            alpha = 0.4f
+                                        )
+                                    ),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 16.dp)
+                                )
+                            }
+
+                            if (state.plantsForToday.size > 1) {
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 16.dp)
+                                ) {
+                                    FilledTonalButton(onClick = { viewModel.onEvent(HomeEvent.CheckAll) }) {
+                                        Text(text = stringResource(id = R.string.CheckAll))
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -30,5 +30,8 @@ data class PlantAlarmDto(
     val basicDate: String,
 
     @ColumnInfo(name = "nextDate")
-    val nextDate: String
+    val nextDate: String,
+
+    @ColumnInfo(name = "isWatering")
+    val isWatering: Boolean
 )

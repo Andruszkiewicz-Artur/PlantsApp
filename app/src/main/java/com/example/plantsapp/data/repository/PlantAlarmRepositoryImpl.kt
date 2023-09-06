@@ -9,7 +9,7 @@ class PlantAlarmRepositoryImpl(
     private val dao: PlantAlarmDao
 ): PlantAlarmRepository {
 
-    override fun getAllPlantsAlarm(): Flow<List<PlantAlarmDto>> {
+    override fun getAllPlantsAlarm(): List<PlantAlarmDto> {
         return dao.getAllPlantsAlarm()
     }
 

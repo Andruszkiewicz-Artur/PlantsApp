@@ -22,4 +22,8 @@
     <string name="LastWatering">Last watering</string>
     <string name="Retry">Retry</string>
     <string name="RecoverAlarm">You want to recover the alarm?</string>
+    <string name="PlantsList">Plants list</string>
+    <string name="PlantsWatered">Tick the plants you watered below.</string>
+    <string name="NonePlantsForToday">None plants for today!</string>
+    <string name="CheckAll">Check All</string>
 </resources>

@@ -20,7 +20,8 @@ fun PlantAlarmModel.toPlantAlarmDto(): PlantAlarmDto {
         isActive = isActive,
         repeating = repeating,
         basicDate = basicDate.toString(),
-        nextDate = nextDate.toString()
+        nextDate = nextDate.toString(),
+        isWatering = isWatering
     )
 }
 
@@ -33,14 +34,7 @@ fun PlantAlarmDto.toPlantAlarmModel(): PlantAlarmModel {
         isActive = isActive,
         repeating = repeating,
         basicDate = LocalDateTime.parse(basicDate),
-        nextDate = LocalDateTime.parse(nextDate)
+        nextDate = LocalDateTime.parse(nextDate),
+        isWatering = isWatering
     )
-}
-
-fun Flow<List<PlantAlarmDto>>.toListOfPlantAlarmModel(): Flow<List<PlantAlarmModel>> {
-    return this.map { plantAlarmDtoList ->
-        plantAlarmDtoList.map { dto ->
-            dto.toPlantAlarmModel()
-        }
-    }
 }

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PlantAlarmRepository {
 
-    fun getAllPlantsAlarm(): Flow<List<PlantAlarmDto>>
+    fun getAllPlantsAlarm(): List<PlantAlarmDto>
 
     suspend fun getPlantAlarm(id: Int): PlantAlarmDto?
 
