@@ -8,4 +8,9 @@ object Static {
     const val NOTIFICATION_CHANNEL_NAME = "ALARM_NOTIFICATION"
     const val NOTIFICATION_ID = 10
 
+    const val DEEP_LINK_URI = "https://plant-app.com"
+
+    //home message
+    const val PRESENT_WATERING = "PRESENT_WATERING"
+
 }

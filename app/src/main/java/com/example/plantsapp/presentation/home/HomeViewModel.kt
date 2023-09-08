@@ -1,7 +1,10 @@
 package com.example.plantsapp.presentation.home
 
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.plantsapp.core.Static
 import com.example.plantsapp.domain.use_case.PlantAlarmUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val plantAlarmUseCases: PlantAlarmUseCases,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -31,6 +35,12 @@ class HomeViewModel @Inject constructor(
 
                 updatePlantsForToday()
             }.launchIn(viewModelScope)
+        }
+
+        savedStateHandle.get<String>(Static.PRESENT_WATERING)?.let { presentWatering ->
+            _state.update {it.copy(
+                isDialog = presentWatering.toBoolean()
+            ) }
         }
     }
 

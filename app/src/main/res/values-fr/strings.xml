@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlantsApp</string>
+    <string name="PlantsAlarms">Alarmes des Plantes</string>
+    <string name="NoneAlarmsYet">Aucune alarme pour le moment !</string>
+    <string name="SetUpNewAlarm">Configurer une nouvelle alarme !</string>
+    <string name="MakeNewAlarm">Créer une nouvelle alarme</string>
+    <string name="PlantName">Nom de la Plante</string>
+    <string name="PlantDescription">Description de la Plante</string>
+    <string name="Day">Jour</string>
+    <string name="Every">Tous les</string>
+    <string name="HowDoYouWantPickImage">Comment souhaitez-vous ajouter une photo ?</string>
+    <string name="Gallery">Bibliothèque de Photos</string>
+    <string name="PickPhoto">Sélectionner une Photo</string>
+    <string name="Cancel">Annuler</string>
+    <string name="AddPlantName">Ajoutez le nom de la plante !</string>
+    <string name="EveryDayIsWrong">Tous les jours ne peut pas être inférieur à 1 !</string>
+    <string name="AddNewAlarm">Ajouter une nouvelle alarme !</string>
+    <string name="SaveAlarm">Enregistrer l alarme !</string>
+    <string name="Repeating">Répétition</string>
+    <string name="Days">Jours</string>
+    <string name="NextWatering">Prochain arrosage</string>
+    <string name="LastWatering">Dernier arrosage</string>
+    <string name="Retry">Réessayer</string>
+    <string name="RecoverAlarm">Voulez-vous récupérer l alarme ?</string>
+    <string name="PlantsList">Liste des Plantes</string>
+    <string name="PlantsWatered">Cochez les plantes que vous avez arrosées ci-dessous.</string>
+    <string name="NonePlantsForToday">Aucune plante pour aujourd hui !</string>
+    <string name="CheckAll">Tout Cocher</string>
+    <string name="YouNeedWateringPlants">Vous devez arroser les plantes !</string>
+    <string name="Watering">Arrosage</string>
+</resources>

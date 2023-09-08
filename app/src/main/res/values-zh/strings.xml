@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">植物App</string>
+    <string name="PlantsAlarms">植物闹钟</string>
+    <string name="NoneAlarmsYet">暂无闹钟！</string>
+    <string name="SetUpNewAlarm">设置新闹钟！</string>
+    <string name="MakeNewAlarm">创建新闹钟</string>
+    <string name="PlantName">植物名称</string>
+    <string name="PlantDescription">植物描述</string>
+    <string name="Day">天</string>
+    <string name="Every">每</string>
+    <string name="HowDoYouWantPickImage">您想如何添加照片？</string>
+    <string name="Gallery">相册</string>
+    <string name="PickPhoto">选择照片</string>
+    <string name="Cancel">取消</string>
+    <string name="AddPlantName">添加植物名称！</string>
+    <string name="EveryDayIsWrong">每天不能少于1！</string>
+    <string name="AddNewAlarm">添加新闹钟！</string>
+    <string name="SaveAlarm">保存闹钟！</string>
+    <string name="Repeating">重复</string>
+    <string name="Days">天</string>
+    <string name="NextWatering">下次浇水</string>
+    <string name="LastWatering">上次浇水</string>
+    <string name="Retry">重试</string>
+    <string name="RecoverAlarm">您要恢复闹钟吗？</string>
+    <string name="PlantsList">植物列表</string>
+    <string name="PlantsWatered">勾选您已浇水的植物。</string>
+    <string name="NonePlantsForToday">今天没有植物！</string>
+    <string name="CheckAll">全选</string>
+    <string name="YouNeedWateringPlants">您需要浇水植物！</string>
+    <string name="Watering">浇水</string>
+</resources>

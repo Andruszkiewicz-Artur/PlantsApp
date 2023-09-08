@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlantsApp</string>
+    <string name="PlantsAlarms">Alarmy Roślin</string>
+    <string name="NoneAlarmsYet">Brak alarmów!</string>
+    <string name="SetUpNewAlarm">Ustaw nowy alarm!</string>
+    <string name="MakeNewAlarm">Stwórz nowy alarm</string>
+    <string name="PlantName">Nazwa rośliny</string>
+    <string name="PlantDescription">Opis rośliny</string>
+    <string name="Day">Dzień</string>
+    <string name="Every">Co</string>
+    <string name="HowDoYouWantPickImage">Jak chcesz dodać zdjęcie?</string>
+    <string name="Gallery">Biblioteka Zdjęć</string>
+    <string name="PickPhoto">Wybierz Zdjęcie</string>
+    <string name="Cancel">Anuluj</string>
+    <string name="AddPlantName">Dodaj nazwę rośliny!</string>
+    <string name="EveryDayIsWrong">Co dzień nie może być mniejsze niż 1!</string>
+    <string name="AddNewAlarm">Dodaj nowy alarm!</string>
+    <string name="SaveAlarm">Zapisz alarm!</string>
+    <string name="Repeating">Powtarzający się</string>
+    <string name="Days">Dni</string>
+    <string name="NextWatering">Następne podlewanie</string>
+    <string name="LastWatering">Ostatnie podlewanie</string>
+    <string name="Retry">Ponów</string>
+    <string name="RecoverAlarm">Czy chcesz przywrócić alarm?</string>
+    <string name="PlantsList">Lista Roślin</string>
+    <string name="PlantsWatered">Zaznacz rośliny, które podlałeś poniżej.</string>
+    <string name="NonePlantsForToday">Brak roślin na dzisiaj!</string>
+    <string name="CheckAll">Zaznacz Wszystko</string>
+    <string name="YouNeedWateringPlants">Musisz podlewać rośliny!</string>
+    <string name="Watering">Podlewanie</string>
+</resources>

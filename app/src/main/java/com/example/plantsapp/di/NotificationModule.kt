@@ -3,13 +3,16 @@ package com.example.plantsapp.di
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.net.toUri
 import com.example.plantsapp.R
+import com.example.plantsapp.core.Static
 import com.example.plantsapp.core.Static.NOTIFICATION_CHANNEL_ID
 import com.example.plantsapp.core.Static.NOTIFICATION_CHANNEL_NAME
 import com.example.plantsapp.presentation.MainActivity
@@ -34,10 +37,16 @@ object NotificationModule {
     ): NotificationCompat.Builder {
         val flag = PendingIntent.FLAG_IMMUTABLE
 
-        val clickIntent = Intent(context, MainActivity::class.java)
-        val clickPendingIntent = PendingIntent.getActivity(
-            context, 1, clickIntent, flag
+        val clickIntent = Intent(
+            Intent.ACTION_VIEW,
+            "${Static.DEEP_LINK_URI}/${Static.PRESENT_WATERING}=true".toUri(),
+            context,
+            MainActivity::class.java
         )
+        val clickPendingIntent: PendingIntent = TaskStackBuilder.create(context).run {
+            addNextIntentWithParentStack(clickIntent)
+            getPendingIntent(1, flag)
+        }
 
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)

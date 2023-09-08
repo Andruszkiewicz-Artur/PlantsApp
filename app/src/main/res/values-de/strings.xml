@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PflanzenApp</string>
+    <string name="PlantsAlarms">Pflanzenwecker</string>
+    <string name="NoneAlarmsYet">Noch keine Wecker!</string>
+    <string name="SetUpNewAlarm">Neuen Wecker einrichten!</string>
+    <string name="MakeNewAlarm">Neuen Wecker erstellen</string>
+    <string name="PlantName">Pflanzenname</string>
+    <string name="PlantDescription">Pflanzenbeschreibung</string>
+    <string name="Day">Tag</string>
+    <string name="Every">Alle</string>
+    <string name="HowDoYouWantPickImage">Wie möchten Sie ein Foto hinzufügen?</string>
+    <string name="Gallery">Fotobibliothek</string>
+    <string name="PickPhoto">Foto auswählen</string>
+    <string name="Cancel">Abbrechen</string>
+    <string name="AddPlantName">Pflanzennamen hinzufügen!</string>
+    <string name="EveryDayIsWrong">Jeden Tag darf nicht kleiner als 1 sein!</string>
+    <string name="AddNewAlarm">Neuen Wecker hinzufügen!</string>
+    <string name="SaveAlarm">Wecker speichern!</string>
+    <string name="Repeating">Wiederholung</string>
+    <string name="Days">Tage</string>
+    <string name="NextWatering">Nächste Bewässerung</string>
+    <string name="LastWatering">Letzte Bewässerung</string>
+    <string name="Retry">Erneut versuchen</string>
+    <string name="RecoverAlarm">Möchten Sie den Wecker wiederherstellen?</string>
+    <string name="PlantsList">Pflanzenliste</string>
+    <string name="PlantsWatered">Haken Sie die Pflanzen an, die Sie bewässert haben.</string>
+    <string name="NonePlantsForToday">Keine Pflanzen für heute!</string>
+    <string name="CheckAll">Alles auswählen</string>
+    <string name="YouNeedWateringPlants">Sie müssen die Pflanzen gießen!</string>
+    <string name="Watering">Bewässerung</string>
+</resources>

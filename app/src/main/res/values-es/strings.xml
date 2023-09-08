@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlantsApp</string>
+    <string name="PlantsAlarms">Alarmas de Plantas</string>
+    <string name="NoneAlarmsYet">¡Aún no hay alarmas!</string>
+    <string name="SetUpNewAlarm">Configurar una nueva alarma</string>
+    <string name="MakeNewAlarm">Crear nueva alarma</string>
+    <string name="PlantName">Nombre de la Planta</string>
+    <string name="PlantDescription">Descripción de la Planta</string>
+    <string name="Day">Día</string>
+    <string name="Every">Cada</string>
+    <string name="HowDoYouWantPickImage">¿Cómo desea agregar una foto?</string>
+    <string name="Gallery">Biblioteca de Fotos</string>
+    <string name="PickPhoto">Seleccionar Foto</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="AddPlantName">¡Añadir nombre de la planta!</string>
+    <string name="EveryDayIsWrong">Cada día no puede ser menor que 1.</string>
+    <string name="AddNewAlarm">Agregar nueva alarma</string>
+    <string name="SaveAlarm">Guardar alarma</string>
+    <string name="Repeating">Repetición</string>
+    <string name="Days">Días</string>
+    <string name="NextWatering">Próximo riego</string>
+    <string name="LastWatering">Último riego</string>
+    <string name="Retry">Reintentar</string>
+    <string name="RecoverAlarm">¿Desea recuperar la alarma?</string>
+    <string name="PlantsList">Lista de Plantas</string>
+    <string name="PlantsWatered">Marque las plantas que ha regado a continuación.</string>
+    <string name="NonePlantsForToday">¡No hay plantas para hoy!</string>
+    <string name="CheckAll">Marcar Todos</string>
+    <string name="YouNeedWateringPlants">Necesita regar las plantas.</string>
+    <string name="Watering">Riego</string>
+</resources>

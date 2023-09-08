@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlantsApp</string>
+    <string name="PlantsAlarms">Будильники для растений</string>
+    <string name="NoneAlarmsYet">Пока нет будильников!</string>
+    <string name="SetUpNewAlarm">Настроить новый будильник!</string>
+    <string name="MakeNewAlarm">Создать новый будильник</string>
+    <string name="PlantName">Имя растения</string>
+    <string name="PlantDescription">Описание растения</string>
+    <string name="Day">День</string>
+    <string name="Every">Каждый</string>
+    <string name="HowDoYouWantPickImage">Как вы хотите добавить фото?</string>
+    <string name="Gallery">Фото библиотека</string>
+    <string name="PickPhoto">Выбрать фото</string>
+    <string name="Cancel">Отменить</string>
+    <string name="AddPlantName">Введите имя растения!</string>
+    <string name="EveryDayIsWrong">Каждый день не может быть меньше 1!</string>
+    <string name="AddNewAlarm">Добавить новый будильник!</string>
+    <string name="SaveAlarm">Сохранить будильник!</string>
+    <string name="Repeating">Повторение</string>
+    <string name="Days">Дни</string>
+    <string name="NextWatering">Следующее поливание</string>
+    <string name="LastWatering">Последнее поливание</string>
+    <string name="Retry">Повторить</string>
+    <string name="RecoverAlarm">Хотите восстановить будильник?</string>
+    <string name="PlantsList">Список растений</string>
+    <string name="PlantsWatered">Отметьте растения, которые вы полили ниже.</string>
+    <string name="NonePlantsForToday">Сегодня нет растений!</string>
+    <string name="CheckAll">Выбрать все</string>
+    <string name="YouNeedWateringPlants">Вы должны поливать растения!</string>
+    <string name="Watering">Полив</string>
+</resources>
