@@ -1,20 +1,28 @@
 package com.example.plantsapp.domain.controller
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
+import com.example.plantsapp.core.Static.NOTIFICATION_ID
 import com.example.plantsapp.domain.use_case.PlantAlarmUseCases
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.time.LocalDateTime
-import javax.inject.Inject
 
+@OptIn(ExperimentalAnimationApi::class)
 @HiltWorker
 class AlarmController @AssistedInject constructor(
     private val useCases: PlantAlarmUseCases,
+    private val notificationBuilder: NotificationCompat.Builder,
+    private val notificationManager: NotificationManagerCompat,
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters
 ): CoroutineWorker(context, workerParameters) {
@@ -30,7 +38,7 @@ class AlarmController @AssistedInject constructor(
             val currentDate = LocalDateTime.now()
             val today = LocalDateTime.of(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, 23, 59, 59)
 
-            data = data.filter {
+            val newData = data.filter {
                 it.nextDate <= today
             }.map {
                 it.copy(
@@ -40,9 +48,14 @@ class AlarmController @AssistedInject constructor(
                 )
             }
 
-            data.forEach {
+            newData.forEach {
                 useCases.upsertPlantAlarmUseCase.invoke(it)
-                Log.d(TAG, "update: $it")
+            }
+
+            Log.d(TAG, "Start")
+            if (data.any { !it.isWatering && it.basicDate <= today}) {
+                Log.d(TAG, "Work")
+                notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
             }
 
             Result.success()
@@ -50,9 +63,5 @@ class AlarmController @AssistedInject constructor(
             Log.d(TAG, e.message.toString())
             Result.failure()
         }
-    }
-
-    override suspend fun getForegroundInfo(): ForegroundInfo {
-        return super.getForegroundInfo()
     }
 }

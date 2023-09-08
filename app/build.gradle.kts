@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.material.icons)
     implementation(libs.lifecycle)
+    implementation(libs.accompanist.permissions)
 
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.coroutines)

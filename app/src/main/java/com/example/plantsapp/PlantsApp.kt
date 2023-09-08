@@ -1,8 +1,11 @@
 package com.example.plantsapp
 
 import android.app.Application
+import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.Configuration
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
@@ -20,20 +23,22 @@ class PlantsApp: Application(), Configuration.Provider {
 
     override fun getWorkManagerConfiguration(): Configuration =
         Configuration.Builder()
-            .setMinimumLoggingLevel(Log.DEBUG)
+            .setMinimumLoggingLevel(Log.INFO)
             .setWorkerFactory(workerFactory)
             .build()
 
 }
 
 class AlarmControllerFactory @Inject constructor(
-    private val useCases: PlantAlarmUseCases
+    private val useCases: PlantAlarmUseCases,
+    private val notificationBuilder: NotificationCompat.Builder,
+    private val notificationManager: NotificationManagerCompat
 ): WorkerFactory() {
 
     override fun createWorker(
         appContext: Context,
         workerClassName: String,
         workerParameters: WorkerParameters
-    ): ListenableWorker = AlarmController(useCases, appContext, workerParameters)
+    ): ListenableWorker = AlarmController(useCases, notificationBuilder, notificationManager, appContext, workerParameters)
 
 }

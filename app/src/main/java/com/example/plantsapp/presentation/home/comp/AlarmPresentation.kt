@@ -47,7 +47,6 @@ fun AlarmPresentation(
     onClickAlarm: () -> Unit,
     onClickSwitch: () -> Unit,
     onClickDelete: () -> Unit,
-    isDivider: Boolean,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -157,6 +156,8 @@ fun AlarmPresentation(
                         )
                     }
                 }
+                
+                Spacer(modifier = Modifier.width(16.dp))
 
                 Switch(
                     checked = alarmModel.isActive,

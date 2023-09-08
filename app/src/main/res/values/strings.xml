@@ -26,4 +26,6 @@
     <string name="PlantsWatered">Tick the plants you watered below.</string>
     <string name="NonePlantsForToday">None plants for today!</string>
     <string name="CheckAll">Check All</string>
+    <string name="YouNeedWateringPlants">You need watering plants!</string>
+    <string name="Watering">Watering</string>
 </resources>

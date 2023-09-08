@@ -1,6 +1,7 @@
 package com.example.plantsapp.presentation.home.comp
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -170,7 +171,6 @@ fun HomePresentation(
                                 }
                             }
                         },
-                        isDivider = state.plantsAlarm.last() != alarm,
                         modifier = Modifier
                             .animateItemPlacement(
                                 animationSpec = tween(
@@ -186,97 +186,98 @@ fun HomePresentation(
     }
 
     if (state.isDialog) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
-                )
+        AnimatedVisibility(visible = state.isDialog) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
+                    )
+            )
+        }
+        Dialog(
+            onDismissRequest = {
+                viewModel.onEvent(HomeEvent.HideDialog)
+            }
         ) {
-            Dialog(
-                onDismissRequest = {
-                    viewModel.onEvent(HomeEvent.HideDialog)
-                }
-            ) {
-                ElevatedCard {
-                    LazyColumn(
-                        modifier = Modifier
-                            .padding(16.dp)
-                    ) {
-                        item {
-                            Box(
+            ElevatedCard {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.End,
                                 modifier = Modifier
                                     .fillMaxWidth()
                             ) {
-                                Row(
-                                    horizontalArrangement = Arrangement.End,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                ) {
-                                    IconButton(onClick = { viewModel.onEvent(HomeEvent.HideDialog) }) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Close,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(40.dp)
-                                        )
-                                    }
+                                IconButton(onClick = { viewModel.onEvent(HomeEvent.HideDialog) }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Close,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                    )
                                 }
-                                Text(
-                                    text = stringResource(id = R.string.PlantsList),
-                                    style = MaterialTheme.typography.headlineMedium,
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 16.dp)
-                                )
                             }
-
                             Text(
-                                text = stringResource(id = R.string.PlantsWatered),
+                                text = stringResource(id = R.string.PlantsList),
+                                style = MaterialTheme.typography.headlineMedium,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                            )
-
-                        }
-
-                        items(state.plantsForToday) {
-                            plantCheckBox(
-                                plantName = it.plantName,
-                                checked = it.isWatering,
-                                onCheckedChange = { checked ->
-                                    viewModel.onEvent(HomeEvent.ClickCheckBox(checked, it))
-                                }
+                                    .padding(vertical = 16.dp)
                             )
                         }
 
-                        item {
-                            if (state.plantsForToday.isEmpty()) {
-                                Text(
-                                    text = stringResource(id = R.string.NonePlantsForToday),
-                                    style = MaterialTheme.typography.bodySmall.copy(
-                                        color = MaterialTheme.colorScheme.onBackground.copy(
-                                            alpha = 0.4f
-                                        )
-                                    ),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 16.dp)
-                                )
+                        Text(
+                            text = stringResource(id = R.string.PlantsWatered),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+
+                    }
+
+                    items(state.plantsForToday) {
+                        plantCheckBox(
+                            plantName = it.plantName,
+                            checked = it.isWatering,
+                            onCheckedChange = { checked ->
+                                viewModel.onEvent(HomeEvent.ClickCheckBox(checked, it))
                             }
+                        )
+                    }
 
-                            if (state.plantsForToday.size > 1) {
-                                Row(
-                                    horizontalArrangement = Arrangement.End,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 16.dp)
-                                ) {
-                                    FilledTonalButton(onClick = { viewModel.onEvent(HomeEvent.CheckAll) }) {
-                                        Text(text = stringResource(id = R.string.CheckAll))
-                                    }
+                    item {
+                        if (state.plantsForToday.isEmpty()) {
+                            Text(
+                                text = stringResource(id = R.string.NonePlantsForToday),
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.onBackground.copy(
+                                        alpha = 0.4f
+                                    )
+                                ),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp)
+                            )
+                        }
+
+                        if (state.plantsForToday.size > 1) {
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp)
+                            ) {
+                                FilledTonalButton(onClick = { viewModel.onEvent(HomeEvent.CheckAll) }) {
+                                    Text(text = stringResource(id = R.string.CheckAll))
                                 }
                             }
                         }
