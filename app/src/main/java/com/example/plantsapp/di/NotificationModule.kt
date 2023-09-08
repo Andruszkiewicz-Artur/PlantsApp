@@ -2,7 +2,9 @@ package com.example.plantsapp.di
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.core.app.NotificationCompat
@@ -10,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.plantsapp.R
 import com.example.plantsapp.core.Static.NOTIFICATION_CHANNEL_ID
 import com.example.plantsapp.core.Static.NOTIFICATION_CHANNEL_NAME
+import com.example.plantsapp.presentation.MainActivity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,11 +32,19 @@ object NotificationModule {
     fun provideNotificationBuilder(
         @ApplicationContext context: Context
     ): NotificationCompat.Builder {
+        val flag = PendingIntent.FLAG_IMMUTABLE
+
+        val clickIntent = Intent(context, MainActivity::class.java)
+        val clickPendingIntent = PendingIntent.getActivity(
+            context, 1, clickIntent, flag
+        )
+
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(context.getString(R.string.Watering))
             .setContentText(context.getString(R.string.YouNeedWateringPlants))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(clickPendingIntent)
     }
 
     @Singleton

@@ -7,6 +7,7 @@ import com.example.plantsapp.data.data_source.PlantsAlarmDatabase
 import com.example.plantsapp.data.repository.PlantAlarmRepositoryImpl
 import com.example.plantsapp.domain.repository.PlantAlarmRepository
 import com.example.plantsapp.domain.use_case.DeletePlantAlarmUseCase
+import com.example.plantsapp.domain.use_case.GetAllPlantAlarmFlowUseCase
 import com.example.plantsapp.domain.use_case.GetAllPlantAlarmUseCase
 import com.example.plantsapp.domain.use_case.GetPlantAlarmUseCase
 import com.example.plantsapp.domain.use_case.PlantAlarmUseCases
@@ -44,7 +45,8 @@ object AppModule {
             getAllPlantAlarmUseCase = GetAllPlantAlarmUseCase(repository),
             getPlantAlarmUseCase = GetPlantAlarmUseCase(repository),
             upsertPlantAlarmUseCase = UpsertPlantAlarmUseCase(repository),
-            deletePlantAlarmUseCase = DeletePlantAlarmUseCase(repository)
+            deletePlantAlarmUseCase = DeletePlantAlarmUseCase(repository),
+            getAllPlantAlarmFlowUseCase = GetAllPlantAlarmFlowUseCase(repository)
         )
     }
 }

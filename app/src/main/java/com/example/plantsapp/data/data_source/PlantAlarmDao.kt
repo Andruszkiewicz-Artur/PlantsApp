@@ -15,6 +15,9 @@ interface PlantAlarmDao {
     @Query("SELECT * FROM plants_alarm ORDER BY id DESC")
     fun getAllPlantsAlarm(): List<PlantAlarmDto>
 
+    @Query("SELECT * FROM plants_alarm ORDER BY id DESC")
+    fun getAllPlantsAlarmFlow(): Flow<List<PlantAlarmDto>>
+
     @Query("SELECT * FROM plants_alarm WHERE id = :id")
     suspend fun getPlantAlarm(id: Int): PlantAlarmDto?
 

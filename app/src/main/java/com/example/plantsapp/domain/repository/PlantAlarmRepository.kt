@@ -7,6 +7,8 @@ interface PlantAlarmRepository {
 
     fun getAllPlantsAlarm(): List<PlantAlarmDto>
 
+    fun getAllPlantsAlarmFlow(): Flow<List<PlantAlarmDto>>
+
     suspend fun getPlantAlarm(id: Int): PlantAlarmDto?
 
     suspend fun upsertPlantAlarm(plantAlarmDto: PlantAlarmDto)

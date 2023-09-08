@@ -270,23 +270,23 @@ fun AddEditPresentation(
                     )
                 }
             }
-
-            if(state.showCamera) {
-                CameraView(
-                    outputDirectory = state.outputDirectory,
-                    executor = state.cameraExecutor,
-                    onImageCapture = {
-                        viewModel.onEvent(AddEditEvent.ChoosePhoto(it))
-                        viewModel.onEvent(AddEditEvent.HideCamera)
-                    },
-                    onError = {
-                        Log.e("Check", "View error:", it)
-                    },
-                    onClickHide = {
-                        viewModel.onEvent(AddEditEvent.HideCamera)
-                    }
-                )
-            }
         }
+    }
+
+    if(state.showCamera) {
+        CameraView(
+            outputDirectory = state.outputDirectory,
+            executor = state.cameraExecutor,
+            onImageCapture = {
+                viewModel.onEvent(AddEditEvent.ChoosePhoto(it))
+                viewModel.onEvent(AddEditEvent.HideCamera)
+            },
+            onError = {
+                Log.e("Check", "View error:", it)
+            },
+            onClickHide = {
+                viewModel.onEvent(AddEditEvent.HideCamera)
+            }
+        )
     }
 }

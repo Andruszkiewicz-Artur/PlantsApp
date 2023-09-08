@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -22,13 +24,13 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val data  = plantAlarmUseCases.getAllPlantAlarmUseCase.invoke()
+            plantAlarmUseCases.getAllPlantAlarmFlowUseCase.invoke().onEach { plantAlarms ->
+                _state.update { it.copy(
+                    plantsAlarm = plantAlarms
+                ) }
 
-            _state.update { it.copy(
-                plantsAlarm = data
-            ) }
-
-            updatePlantsForToday()
+                updatePlantsForToday()
+            }.launchIn(viewModelScope)
         }
     }
 

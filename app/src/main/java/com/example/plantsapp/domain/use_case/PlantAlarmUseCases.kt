@@ -4,5 +4,6 @@ data class PlantAlarmUseCases(
     val getAllPlantAlarmUseCase: GetAllPlantAlarmUseCase,
     val getPlantAlarmUseCase: GetPlantAlarmUseCase,
     val upsertPlantAlarmUseCase: UpsertPlantAlarmUseCase,
-    val deletePlantAlarmUseCase: DeletePlantAlarmUseCase
+    val deletePlantAlarmUseCase: DeletePlantAlarmUseCase,
+    val getAllPlantAlarmFlowUseCase: GetAllPlantAlarmFlowUseCase
 )

@@ -13,6 +13,10 @@ class PlantAlarmRepositoryImpl(
         return dao.getAllPlantsAlarm()
     }
 
+    override fun getAllPlantsAlarmFlow(): Flow<List<PlantAlarmDto>> {
+        return dao.getAllPlantsAlarmFlow()
+    }
+
     override suspend fun getPlantAlarm(id: Int): PlantAlarmDto? {
         return dao.getPlantAlarm(id)
     }
