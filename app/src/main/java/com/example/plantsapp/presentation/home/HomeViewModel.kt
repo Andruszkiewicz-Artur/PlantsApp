@@ -23,8 +23,16 @@ class HomeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
+    private val currentDate = LocalDateTime.now()
+    private val beginningTheDay = LocalDateTime.of(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, 0, 0, 0)
+    private val endTheDay = LocalDateTime.of(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, 23, 59, 59)
+
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
+
+    companion object {
+        private const val TAG = "HomeViewModel"
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -51,35 +59,16 @@ class HomeViewModel @Inject constructor(
                     plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(event.alarm.copy(
                         isActive = !event.alarm.isActive
                     ))
-
-                    _state.update { it.copy(
-                        plantsAlarm = it.plantsAlarm.map {
-                            if (it == event.alarm) it.copy(isActive = it.isActive.not())
-                            else it
-                        }
-                    ) }
-
-                    updatePlantsForToday()
                 }
             }
             is HomeEvent.DeleteAlarm -> {
                 viewModelScope.launch {
                     plantAlarmUseCases.deletePlantAlarmUseCase.invoke(event.alarm)
-                    _state.update { it.copy(
-                        plantsAlarm = it.plantsAlarm.minus(event.alarm)
-                    ) }
-
-                    updatePlantsForToday()
                 }
             }
             is HomeEvent.AddAlarm -> {
                 viewModelScope.launch {
                     plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(event.alarm)
-                    _state.update { it.copy(
-                        plantsAlarm = it.plantsAlarm.plus(event.alarm)
-                    ) }
-
-                    updatePlantsForToday()
                 }
             }
             HomeEvent.HideDialog -> {
@@ -97,40 +86,19 @@ class HomeViewModel @Inject constructor(
                     val updatePlant = event.plant.copy(isWatering = event.checked)
 
                     plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(updatePlant)
-                    _state.update {it.copy(
-                        plantsAlarm = _state.value.plantsAlarm.map {
-                            if (it == event.plant) updatePlant
-                            else it
-                        }
-                    ) }
-
-                    updatePlantsForToday()
                 }
             }
             HomeEvent.CheckAll -> {
                 viewModelScope.launch {
-                    val newList = _state.value.plantsForToday.map {
-                        if (!it.isWatering) {
-                            plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(it)
-                            it.copy(isWatering = true)
-                        } else {
-                            it
-                        }
+                    _state.value.plantsForToday.map {
+                        if (!it.isWatering) plantAlarmUseCases.upsertPlantAlarmUseCase.invoke(it.copy(isWatering = true))
                     }
-
-                    _state.update { it.copy(
-                        plantsForToday = newList
-                    ) }
                 }
             }
         }
     }
 
     private fun updatePlantsForToday() {
-        val currentDate = LocalDateTime.now()
-        val beginningTheDay = LocalDateTime.of(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, 0, 0, 0)
-        val endTheDay = LocalDateTime.of(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, 23, 59, 59)
-
         _state.update { it.copy(
             plantsForToday = _state.value.plantsAlarm.filter { it.basicDate >= beginningTheDay && it.basicDate <= endTheDay && it.isActive}
         ) }

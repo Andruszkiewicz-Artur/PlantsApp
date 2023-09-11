@@ -5,6 +5,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,7 +42,7 @@ import com.example.plantsapp.R
 import com.example.plantsapp.domain.model.PlantAlarmModel
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun AlarmPresentation(
     alarmModel: PlantAlarmModel,
@@ -130,8 +132,7 @@ fun AlarmPresentation(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Row {
-
+                    FlowRow {
                         Text(
                             text = stringResource(id = R.string.LastWatering) + ": ",
                             fontWeight = FontWeight.Bold
@@ -144,7 +145,7 @@ fun AlarmPresentation(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Row {
+                    FlowRow {
 
                         Text(
                             text = stringResource(id = R.string.NextWatering) + ": ",

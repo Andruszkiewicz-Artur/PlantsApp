@@ -60,6 +60,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -97,6 +98,7 @@ fun AddEditPresentation(
     val state = viewModel.state.collectAsState().value
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequesterManager = LocalFocusManager.current
 
     LaunchedEffect(key1 = true) {
         viewModel.sharedFlow.collectLatest { event ->
@@ -173,8 +175,9 @@ fun AddEditPresentation(
                                     .clip(RoundedCornerShape(32.dp))
                                     .heightIn(max = 300.dp)
                                     .clickable {
+                                        keyboardController?.hide()
+                                        focusRequesterManager.clearFocus()
                                         viewModel.onEvent(AddEditEvent.ShowCamera)
-                                        focusRequester.freeFocus()
                                     }
                             )
                         } else {
@@ -184,8 +187,9 @@ fun AddEditPresentation(
                                 modifier = Modifier
                                     .size(200.dp)
                                     .clickable {
+                                        keyboardController?.hide()
+                                        focusRequesterManager.clearFocus()
                                         viewModel.onEvent(AddEditEvent.ShowCamera)
-                                        focusRequester.freeFocus()
                                     }
                             )
                         }

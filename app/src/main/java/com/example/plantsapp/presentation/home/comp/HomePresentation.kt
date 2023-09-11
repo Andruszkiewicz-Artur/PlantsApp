@@ -269,7 +269,7 @@ fun HomePresentation(
                             )
                         }
 
-                        if (state.plantsForToday.size > 1) {
+                        AnimatedVisibility(visible = !state.plantsForToday.filter{ !it.isWatering }.isNullOrEmpty()) {
                             Row(
                                 horizontalArrangement = Arrangement.End,
                                 modifier = Modifier
