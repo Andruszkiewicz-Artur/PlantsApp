@@ -15,4 +15,4 @@ The created application is used to remind the user to water the plants. The user
 - Material Compose 3
 - Jetpack Compose 
 
-<p><b>App presentation: </b> <a href = "https://youtu.be/vyDMIibqBHM">link to video on youtube</a></p>
+<p><b>App presentation: </b> <a href = "https://youtu.be/vU99A36UhcY?si=O71BXdgK24UQyfQl">link to video on youtube</a></p>
