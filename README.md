@@ -15,4 +15,10 @@ The created application is used to remind the user to water the plants. The user
 - Material Compose 3
 - Jetpack Compose 
 
-<p><b>App presentation: </b> <a href = "https://youtu.be/vU99A36UhcY?si=O71BXdgK24UQyfQl">link to video on youtube</a></p>
+# Presentation App
+<p align = "center">
+  <a href = "https://youtu.be/vU99A36UhcY?si=O71BXdgK24UQyfQl">Link to video</a>
+</p>
+<p align = "Center">
+  <img src="https://i.postimg.cc/wB7ST7FL/Presentation-Mobile-App-5.jpg" href="">
+</p>
